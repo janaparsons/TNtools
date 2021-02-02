@@ -19,10 +19,10 @@
 #'
 TN_tracts <- function(state, county, msa, neighborhood1=NULL, neighborhood2=NULL, neighborhood3=NULL, vintage = 2019, census_key = "7e25a5365676472f0dd97248a68e5288a0e65338") {
         ##check inputs of the function
-        state <- if (is.character(state) & length(state)==2){
+        state <- if (is.character(state) & stringr::str_length(state)==2){
                 state
         } else {
-                if (is.character(state) & length(state)==1) {
+                if (is.character(state) & stringr::str_length(state)==1) {
                         paste0("0", state)
                 } else {
                         if (is.numeric(state) & floor(log10(state)) + 1==1) {
@@ -32,6 +32,33 @@ TN_tracts <- function(state, county, msa, neighborhood1=NULL, neighborhood2=NULL
                         }
                 }
         }
+
+        county <- if (is.character(county) & stringr::str_length(county)==3){
+                county
+        } else {
+                if (is.character(county) & stringr::str_length(county)==2) {
+                        paste0("0", county)
+                } else {
+                        if (is.character(county) & stringr::str_length(county)==1) {
+                                paste0("00", county)
+                        } else {
+                                if (is.numeric(county) & floor(log10(county)) + 1==2) {
+                                        paste0("0", county)
+                                } else {
+                                        if (is.numeric(county) & floor(log10(county)) + 1==1) {
+                                                paste0("00", county)
+                                        } else {
+                                                if (is.numeric(county) & floor(log10(county)) + 1==3) {
+                                                        as.character(county)
+                                                }
+                                        }
+                                }
+                        }
+                }
+        }
+
+
+
 
         ##variables--list of the variables that we will call from the census api
         vars <- c('B19013_001E', #median HH income, total
@@ -81,9 +108,15 @@ TN_tracts <- function(state, county, msa, neighborhood1=NULL, neighborhood2=NULL
                 clean_acs() %>%
                 dplyr::select( !vars) %>%
                 mutate_acs() %>%
+                dplyr::select(pop, renter_pop, renter_share, black_share, hispan_share, nonwhite_share,vac_rate,  med_inc, med_gross_rent) %>%
+                as.matrix() %>%
+                t() %>%
                 as.data.frame()
-        acs_msa <- acs_msa %>% dplyr::select(pop, renter_pop, renter_share, black_share, hispan_share, nonwhite_share,vac_rate,  med_inc, med_gross_rent) %>%
-                as.matrix() %>% t() %>% as.data.frame() %>% dplyr::rename(MSA = V1)
+
+        colnames(acs_msa) <- as.character(x$CBSA_title[x$CBSA == msa])
+        #%>%
+                #names()[-1] <- x$CBSA_title[x$CBSA == msa]
+                #dplyr::rename(as.character(x$CBSA_title[x$CBSA == msa])=V1)
 
         memo_table <- dplyr::full_join(tibble::rownames_to_column( acs_nbh),tibble::rownames_to_column(acs_msa)) %>%
                 dplyr::mutate_if(is.numeric, round, digits = 1)
@@ -116,11 +149,8 @@ mutate_acs <- function(data) {
                                pop = scales::label_comma(accuracy = 1)(pop),
                                renter_pop = scales::label_comma(accuracy = 1)(renter_pop),
                                med_inc = scales::label_dollar(accuracy = 1)(med_inc),
-                               med_gross_rent = scales::label_dollar(accuracy = 1)(med_gross_rent))
-
-
-
+                               med_gross_rent = scales::label_dollar(accuracy = 1)(med_gross_rent)) %>%
+                as.data.frame()
 }
 
-#now put this in the master.
 
