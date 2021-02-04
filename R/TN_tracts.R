@@ -18,7 +18,7 @@
 #' @export
 #'
 TN_tracts <- function(state, county, msa, neighborhood1=NULL, neighborhood2=NULL, neighborhood3=NULL, vintage = 2019, census_key = "7e25a5365676472f0dd97248a68e5288a0e65338") {
-        ##check inputs of the function
+##check inputs of the function
         state <- if (is.character(state) & stringr::str_length(state)==2){
                 state
         } else {
@@ -55,6 +55,12 @@ TN_tracts <- function(state, county, msa, neighborhood1=NULL, neighborhood2=NULL
                                 }
                         }
                 }
+        }
+
+        msa <- if(is.numeric(msa)){
+                msa
+        } else {
+                as.character(msa)
         }
 
 
@@ -114,9 +120,6 @@ TN_tracts <- function(state, county, msa, neighborhood1=NULL, neighborhood2=NULL
                 as.data.frame()
 
         colnames(acs_msa) <- as.character(x$CBSA_title[x$CBSA == msa])
-        #%>%
-                #names()[-1] <- x$CBSA_title[x$CBSA == msa]
-                #dplyr::rename(as.character(x$CBSA_title[x$CBSA == msa])=V1)
 
         memo_table <- dplyr::full_join(tibble::rownames_to_column( acs_nbh),tibble::rownames_to_column(acs_msa)) %>%
                 dplyr::mutate_if(is.numeric, round, digits = 1)
