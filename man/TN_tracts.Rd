@@ -11,6 +11,7 @@ TN_tracts(
   neighborhood1 = NULL,
   neighborhood2 = NULL,
   neighborhood3 = NULL,
+  vintage = 2019,
   census_key = "7e25a5365676472f0dd97248a68e5288a0e65338"
 )
 }
@@ -27,6 +28,10 @@ for CBSA codes}
 \item{neighborhood2}{a character vector containing 6-digit TRACTCE character strings}
 
 \item{neighborhood3}{a character vector containing 6-digit TRACTCE character strings}
+
+\item{vintage}{numeric year of data}
+
+\item{census_key}{a character string for census key. Default is Jana's}
 }
 \value{
 A data frame containing neighborhood- and MSA-level data for Gen2 investment memo
