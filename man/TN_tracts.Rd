@@ -12,7 +12,7 @@ TN_tracts(
   neighborhood2 = NULL,
   neighborhood3 = NULL,
   vintage = 2019,
-  census_key = "7e25a5365676472f0dd97248a68e5288a0e65338"
+  census_key
 )
 }
 \arguments{
@@ -31,12 +31,13 @@ for CBSA codes}
 
 \item{vintage}{numeric year of data}
 
-\item{census_key}{a character string for census key. Default is Jana's}
+\item{census_key}{a character string for census key. Request a key \href{https://api.census.gov/data/key_signup.html}{here}.}
 }
 \value{
 A data frame containing neighborhood- and MSA-level data for Gen2 investment memo
 }
 \description{
 This function pulls relevant variables at the census tract and MSA level from
-the census API.
+the census API. This \href{https://statisticalatlas.com/United-States/Overview}{tool}
+may be useful in identifying neighborhood/census tract overlap.
 }

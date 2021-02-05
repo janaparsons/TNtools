@@ -1,7 +1,8 @@
 #' Pull ACS data from the census api
 #'
 #' This function pulls relevant variables at the census tract and MSA level from
-#' the census API.
+#' the census API. This \href{https://statisticalatlas.com/United-States/Overview}{tool}
+#' may be useful in identifying neighborhood/census tract overlap.
 #'
 #' @importFrom magrittr "%>%"
 #'
@@ -13,11 +14,11 @@
 #' @param neighborhood2 a character vector containing 6-digit TRACTCE character strings
 #' @param neighborhood3 a character vector containing 6-digit TRACTCE character strings
 #' @param vintage numeric year of data
-#' @param census_key a character string for census key. Default is Jana's
+#' @param census_key a character string for census key. Request a key \href{https://api.census.gov/data/key_signup.html}{here}.
 #' @return A data frame containing neighborhood- and MSA-level data for Gen2 investment memo
 #' @export
 #'
-TN_tracts <- function(state, county, msa, neighborhood1=NULL, neighborhood2=NULL, neighborhood3=NULL, vintage = 2019, census_key = "7e25a5365676472f0dd97248a68e5288a0e65338") {
+TN_tracts <- function(state, county, msa, neighborhood1=NULL, neighborhood2=NULL, neighborhood3=NULL, vintage = 2019, census_key) {
 ##check inputs of the function
         state <- if (is.character(state) & stringr::str_length(state)==2){
                 state
