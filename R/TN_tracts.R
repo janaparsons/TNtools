@@ -94,8 +94,8 @@ TN_tracts <- function(state, county, msa, neighborhood1=NULL, neighborhood2=NULL
 
         acs_nbh <- acs_clean %>%
                 dplyr::group_by(as.factor(neighborhood))  %>%
-                dplyr::summarise(med_inc = mean(med_inc),
-                          med_gross_rent = mean(med_gross_rent, na.rm = TRUE),
+                dplyr::summarise(med_inc = weighted.mean(x=med_inc, w=pop),
+                          med_gross_rent = weighted.mean(x=med_gross_rent, w=pop, na.rm = TRUE),
                           med_gross_rent_pct_inc = mean(med_gross_rent_pct_inc, na.rm = TRUE),
                           renter_pop = sum(renter_pop),
                           pop = sum(pop),
