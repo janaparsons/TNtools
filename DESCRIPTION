@@ -2,10 +2,10 @@ Package: TNtools
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Jana",
+           family = "Parsons",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
+           email = "Parsons.jana@gmail.com",
            comment = c(ORCID = "YOUR-ORCID-ID"))
 Description: This package contains a set of functions for Trust Neighborhoods neighborhood analysis. Specifically, given a set of census tracts, it pulls a set of ACS data (default 2015-2019 5-year data) that is used in Trust Neighborhoods Gen2 investment memos.
 License: `use_mit_license()`, `use_gpl3_license()` or friends to
@@ -15,11 +15,11 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Imports:
-	dplyr,
-	censusapi, 
-	tibble, 
-	scales, 
-	totalcensus, 
-	stringr
+	dplyr (>= 1.0.4),
+	censusapi (>= 0.7.1), 
+	tibble (>= 3.0.6), 
+	scales (>= 1.1.1), 
+	totalcensus (>= 0.6.5), 
+	stringr (>= 1.4.0)
 Depends: 
     R (>= 2.10)
